@@ -12,6 +12,18 @@ Plain Ubuntu with [[https://github.com/oracle/graal][Oracle graalvm]] installed.
 
 The above ~graalvm~ image with [[https://github.com/technomancy/leiningen][Leiningen]] and Make installed.
 
+Use like this:
+
+#+BEGIN_SRC sh
+  docker run -ti --rm                                                   \
+         --name lein-graal-build                                        \
+         -v "$(pwd):/app:ro"                                            \
+         -v "$(pwd)/target/default+uberjar:/app/target/default+uberjar" \
+         --workdir /app                                                 \
+         runejuhl/lein-graal                                            \
+         lein native-image
+#+END_SRC
+
 ** Building
 
 I've attempted to make a smart Makefile that can build images and fetch
