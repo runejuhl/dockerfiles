@@ -1,6 +1,7 @@
 FROM ubuntu:18.04 AS build
 
-ARG GRAALVM_VERSION=19.0.2
+ARG GRAALVM_VERSION
+ENV GRAALVM_VERSION=$GRAALVM_VERSION
 ENV PATH /usr/local/graalvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN apt-get update && \
@@ -16,6 +17,10 @@ RUN curl -L "https://github.com/oracle/graal/releases/download/vm-${GRAALVM_VERS
 RUN cp /usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts /usr/local/graalvm/jre/lib/security/cacerts
 
 FROM ubuntu:18.04
+
+ARG VERSION
+LABEL maintainer='Rune Juhl Jacobsen <runejuhl@enableit.dk>'
+LABEL version=${VERSION}
 
 COPY --from=build /usr/local/graalvm /usr/local/graalvm
 

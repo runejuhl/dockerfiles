@@ -5,7 +5,7 @@ SHELL=/bin/bash
 # Use nprocs/2 up to a max of 4 processes
 MAKEFLAGS+="-j -l $(shell $(( n=$(nproc) / 2 , n <= 4 ? n : 4 )))"
 
-DOCKER_USER = $(USER)
+export DOCKER_USER = $(USER)
 FIND_CMD := "find . -maxdepth 2 -wholename '*/Dockerfile*' -not -name '*~' | sed -r 's@^\./@@g'"
 ALL := $(shell eval $(FIND_CMD))
 # Find all Dockerfiles, grep for parent images, modify to prefix with ".docker"
@@ -24,7 +24,11 @@ $(DOCKER_IMAGES):
 .PHONY: $(ALL)
 .ONESHELL:
 $(ALL): $(DOCKER_IMAGES)
+	set -euo pipefail
 	name=$(shell dirname $(@))
+	export metadata_file=$$name/metadata.sh
+	set -a
+	. $$metadata_file
+	set +a
 	image_name=$(DOCKER_USER)/$$name
-	docker build -t $$image_name -f $(@) $$name
-	docker push $$image_name
+	docker build -t $$image_name -f $(@) $(shell cat $(shell dirname $(@))/metadata.sh | sed -r 's/^/--build-arg /g') $$name
