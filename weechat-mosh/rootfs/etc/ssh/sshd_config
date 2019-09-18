@@ -1,0 +1,37 @@
+# -*- mode: conf-space; -*-
+LogLevel INFO
+# LogLevel DEBUG
+
+LoginGraceTime 2m
+PermitRootLogin prohibit-password
+# FIXME: should be "yes"
+# StrictModes yes
+StrictModes no
+MaxAuthTries 6
+MaxSessions 10
+
+PubkeyAuthentication yes
+AuthorizedKeysFile	.ssh/authorized_keys
+
+PasswordAuthentication no
+AllowAgentForwarding no
+AllowTcpForwarding no
+GatewayPorts no
+X11Forwarding no
+PermitTTY yes
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive yes
+PermitUserEnvironment no
+Compression yes
+ClientAliveInterval 0
+ClientAliveCountMax 3
+UseDNS no
+PidFile /run/sshd.pid
+MaxStartups 10:30:100
+PermitTunnel no
+ChrootDirectory none
+VersionAddendum REALGUD
+
+# override default of no subsystems
+Subsystem	sftp	/usr/lib/ssh/sftp-server
