@@ -10,6 +10,7 @@ RUN apk update && \
 ENV USER_SHELL=/bin/bash
 ADD Dockerfile /
 ADD entrypoint.sh /
+ADD rootfs/etc/motd /etc/
 ADD rootfs/etc/ssh/sshd_config /etc/ssh/
 ADD rootfs/etc/profile.d/tmux-attach.sh /etc/profile.d/
 
