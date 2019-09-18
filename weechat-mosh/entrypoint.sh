@@ -22,4 +22,5 @@ if grep -qE '^weechat:!' /etc/shadow; then
   printf "%s\\n%s" "${passwd}" "${passwd}" | passwd weechat 2>/dev/null
 fi
 
-exec su-exec weechat tmux new-session -s weechat "/usr/bin/weechat ${*}"
+su-exec weechat tmux new-session -d -s weechat "/usr/bin/weechat ${*}" &
+tail -f
