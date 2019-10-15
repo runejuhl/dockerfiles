@@ -27,8 +27,10 @@ $(ALL): $(DOCKER_IMAGES)
 	set -euo pipefail
 	name=$(shell dirname $(@))
 	export metadata_file=$$name/metadata.sh
-	set -a
-	. $$metadata_file
-	set +a
+	if test -f $$metadata_file; then
+		set -a
+		. $$metadata_file
+		set +a
+	fi
 	image_name=$(DOCKER_USER)/$$name
 	docker build -t $$image_name -f $(@) $(shell cat $(shell dirname $(@))/metadata.sh | sed -r 's/^/--build-arg /g') $$name
