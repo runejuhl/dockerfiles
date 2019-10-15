@@ -2,13 +2,15 @@
 
 MDNS_HOSTNAME=${MDNS_HOSTNAME:-${SERVER_NAME}}
 
-sed -ri \
-    -e "s@^#*(host-name=).*@\\1${MDNS_HOSTNAME}@g" \
-    -e "s@^#*(domain-name=).*@\\1${AVAHI_DOMAIN_NAME}@g" \
-    -e "s@^#*(enable-dbus=).*@\\1no@g" \
-    /etc/avahi/avahi-daemon.conf
+if [[ "${ENABLE_AVAHI}" -eq 1 ]]; then
+  sed -ri \
+      -e "s@^#*(host-name=).*@\\1${MDNS_HOSTNAME}@g" \
+      -e "s@^#*(domain-name=).*@\\1${AVAHI_DOMAIN_NAME}@g" \
+      -e "s@^#*(enable-dbus=).*@\\1no@g" \
+      /etc/avahi/avahi-daemon.conf
 
-/usr/sbin/avahi-daemon --no-rlimits &
+  /usr/sbin/avahi-daemon --no-rlimits &
+fi
 
 sed -ri \
     -e "s@^( *format *)\".+\"\$@\\1\"${SAMPLE_FORMAT}\"@g" \
