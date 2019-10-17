@@ -1,6 +1,6 @@
 FROM ubuntu:19.04 AS build
 
-ENV SNAPCAST_VERSION=0.15.0
+ENV SNAPCAST_VERSION=0.16.0
 ENV SNAPCAST_DEB="snapserver_${SNAPCAST_VERSION}_amd64.deb"
 
 RUN apt-get update && \
