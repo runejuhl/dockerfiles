@@ -1,4 +1,4 @@
-FROM ubuntu:18.04 AS lein-base
+FROM ubuntu:19.04 AS lein-base
 
 ARG LEIN_VERSION
 ARG LEIN_SOURCE='https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein'
@@ -13,7 +13,7 @@ RUN curl -fSsL -O "${LEIN_SOURCE}" && \
 RUN mkdir /usr/local/share/lein && \
   curl -L "${LEIN_STANDALONE}" > "/usr/local/share/lein/leiningen-${LEIN_VERSION}-standalone.jar"
 
-FROM runejuhl/graalvm:latest AS base
+FROM runejuhl/graalvm:latest AS graal-base
 
 ARG LEIN_VERSION
 LABEL maintainer='Rune Juhl Jacobsen <runejuhl@enableit.dk>'

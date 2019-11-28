@@ -1,22 +1,22 @@
-FROM ubuntu:18.04 AS build
+FROM ubuntu:19.04 AS build
 
 ARG GRAALVM_VERSION
 ENV GRAALVM_VERSION=$GRAALVM_VERSION
+ARG DOWNLOAD_URL
 ENV PATH /usr/local/graalvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-RUN apt-get update && \
-    apt-get install -y \
-            curl \
+RUN apt-get update &&                          \
+    apt-get install --no-install-recommends -y \
+            curl                               \
             openjdk-11-jre-headless
 
-RUN curl -L "https://github.com/oracle/graal/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-linux-amd64-${GRAALVM_VERSION}.tar.gz" | \
-      tar zx -C /usr/local/ && \
-      rm -f /usr/local/graalvm-ce-${GRAALVM_VERSION}/src.zip && \
+RUN curl -L "${DOWNLOAD_URL}" | \
+      tar zx -C /usr/local/ &&  \
       ln -s /usr/local/graalvm-ce-${GRAALVM_VERSION} /usr/local/graalvm
 
 RUN cp /usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts /usr/local/graalvm/jre/lib/security/cacerts
 
-FROM ubuntu:18.04
+FROM ubuntu:19.04
 
 ARG VERSION
 LABEL maintainer='Rune Juhl Jacobsen <runejuhl@enableit.dk>'
@@ -30,10 +30,10 @@ ENV PATH /usr/local/graalvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bi
 
 RUN gu install native-image
 
-RUN apt-get update && \
-  apt-get install -y gcc make zlib1g-dev && \
-  apt-get autoclean && \
-  apt-get autoremove && \
+RUN apt-get update &&                                               \
+  apt-get install --no-install-recommends -y gcc make zlib1g-dev && \
+  apt-get autoclean &&                                              \
+  apt-get autoremove &&                                             \
   rm -rf /var/cache/apt /var/lib/apt/lists
 
 ENV GRAALVM_HOME /usr/local/graalvm
