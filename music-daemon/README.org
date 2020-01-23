@@ -1,14 +1,56 @@
-* Running
+* music-daemon
+A Docker image with [[https://www.musicpd.org/][MPD]] and [[https://github.com/badaix/snapcast/][Snapcast]] for streaming audio to multiple endpoints.
+
+** Running
 
 #+BEGIN_SRC sh
-  docker run -ti                       \
-         -e SERVER_NAME=omglol         \
-         --name music-daemon           \
-         --rm                          \
-         -v "${HOME}/music/:/music:ro" \
-         -v "${HOME}/docker/music-daemon/mpd:/mpd/lib:ro" \
-         -p 1704:1704                  \
-         -p 1705:1705                  \
-         -p 6600:6600                  \
-         runejuhl/music-daemon
-#+END_SRC
+docker run -ti                        \
+       -e SERVER_NAME=omglol          \
+       --name music-daemon            \
+       --restart=always               \
+       -v "${HOME}/services/mpd:/mpd" \
+       -v "${HOME}/music/:/music:ro"  \
+       -p 1704:1704                   \
+       -p 1705:1705                   \
+       -p 6600:6600                   \
+       runejuhl/music-daemon
+  #+END_SRC
+
+*** Volumes
+| Target   | Description                       |
+|----------+-----------------------------------|
+| ~/mpd~   | MPD state; usually ~/var/lib/mpd~ |
+| ~/music~ | Music!                            |
+
+*** Flags
++ ~AVAHI_DOMAIN_NAME~ (default ~local~) :: Avahi "TLD"; if your hostname is
+  ~lappy~ the full Avahi domain would be ~lappy.local~.
++ ~ENABLE_AVAHI~ (~0~ or ~1~ (default)) :: Enable or disable AVAHI. Requires DBUS.
++ ~ENABLE_DBUS~ (~0~ or ~1~ (default)) :: Enable or disable DBUS
++ ~SAMPLE_FORMAT~ (default ~48000:16:2~) :: [[https://musicpd.org/doc/html/user.html#audio-output-format][MPD audio format]]
++ ~SNAPSERVER_CONTROL_PORT~ (default ~1705~) :: See below
++ ~SNAPSERVER_PORT~ (default ~1704~) :: See below
+
+*** Exposed ports
+| Port     | Use                |
+|----------+--------------------|
+| TCP 1704 | Snapcast server    |
+| TCP 1705 | Snapcast serverRPC |
+| TCP 6600 | MPD control        |
+
+*** Known bugs
+**** DBUS broken
+I think that DBUS/Avahi is sorta broken. Can't recall the actual issue, and
+there might not be any, but don't be surprised if it doesn't work...
+
+*** Future plans
++ Supporting multiple simultaneous MPD instances, making use of [[https://www.musicpd.org/doc/html/user.html#satellite][MPD's Satellite
+  mode]] to share the music DB.
++ Finding a way to persist snapcast client delay configuration.
+
+** My setup
++ Living room :: ~music-daemon~ running in Docker. snapclient running on HTPC,
+  providing audio output through HDMI
++ Kitchen :: snapclient running on first gen Raspberry Pi with cheap USB audio
+  card (internal audio has too much static)
++ Bedroom :: [[https://github.com/badaix/snapdroid][snapdroid]] running on old Android phone
