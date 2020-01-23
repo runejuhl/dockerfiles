@@ -1,0 +1,6 @@
+* weechat-mosh
+[[https://weechat.org/][Weechat]], [[https://github.com/mobile-shell/mosh][mosh]], [[https://matt.ucc.asn.au/dropbear/dropbear.html][dropbear sshd]] and [[https://github.com/tmux/tmux][tmux]] in a single Docker image for easy IRC.
+
+** Thanks
++ [[https://github.com/jkaberg][Joel Kåberg (jkaberg)]] :: For providing the base of the image with
+  [[https://github.com/jkaberg/dockerfiles/tree/master/weechat][~jkaberg/weechat~]]

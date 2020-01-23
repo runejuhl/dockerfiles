@@ -27,6 +27,9 @@ Use like this:
 *** music-daemon
 See [[./music-daemon/README.org]].
 
+*** weechat-mosh
+See [[./weechat-mosh/README.org]].
+
 ** Building
 I've attempted to make a smart Makefile that can build images and fetch
 dependencies automatically. Make is awesome, but this use case presents a few
