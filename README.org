@@ -1,15 +1,15 @@
 * Dockerfiles
-
 Various Dockerfiles.
 
 ** Contents
 
-*** graalvm
+*** docker-ilo-client
+See [[./docker-ilo-client/README.org]]
 
+*** graalvm
 Plain Ubuntu with [[https://github.com/oracle/graal][Oracle graalvm]] installed.
 
 *** lein-graal
-
 The above ~graalvm~ image with [[https://github.com/technomancy/leiningen][Leiningen]] and Make installed.
 
 Use like this:

@@ -1,0 +1,25 @@
+* docker-ilo-client
+A fork of https://github.com/sshnaidm/docker-ilo-client/ with the intent of
+being able to access ancient iLO through a SOCKS tunnel (e.g. SSH
+DynamicForward).
+
+...that part doesn't really work though...
+
+** Usage
+Start the container:
+#+begin_src sh
+docker run -ti --rm                     \
+       --network host                   \
+       -e HILO_HOST=https://10.10.23.20 \
+       -p 5900:5900                     \
+       runejuhl/docker-ilo-client
+#+end_src
+
+Connect to it using a VNC client:
+#+begin_src sh
+vncviewer localhost:5900
+#+end_src
+
+** Known bugs
+*** Automatic SOCKS proxy settings
+...yeah, doesn't quite work.
