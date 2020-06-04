@@ -1,7 +1,7 @@
-FROM ubuntu:19.04 AS build
+FROM ubuntu:20.04 AS build
 
-ENV SNAPCAST_VERSION=0.16.0
-ENV SNAPCAST_DEB="snapserver_${SNAPCAST_VERSION}_amd64.deb"
+ENV SNAPCAST_VERSION=0.19.0
+ENV SNAPCAST_DEB="snapserver_${SNAPCAST_VERSION}-1_amd64.deb"
 
 RUN apt-get update && \
     apt-get install -y mpd curl
