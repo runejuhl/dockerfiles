@@ -1,4 +1,4 @@
-FROM ubuntu:19.04 AS lein-base
+FROM ubuntu:20.04 AS lein-base
 
 ARG LEIN_VERSION
 ARG LEIN_SOURCE='https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein'

@@ -1,3 +1,4 @@
-GRAALVM_VERSION=19.2.1
+GRAALVM_VERSION=20.3.0
+GRAALVM_RELEASE=ce-java11
 VERSION=$GRAALVM_VERSION
-DOWNLOAD_URL="https://github.com/oracle/graal/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-linux-amd64-${GRAALVM_VERSION}.tar.gz"
+DOWNLOAD_URL="https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-${GRAALVM_RELEASE}-linux-amd64-${GRAALVM_VERSION}.tar.gz"

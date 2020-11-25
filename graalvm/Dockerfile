@@ -1,7 +1,9 @@
-FROM ubuntu:19.04 AS build
+FROM ubuntu:20.04 AS build
 
 ARG GRAALVM_VERSION
 ENV GRAALVM_VERSION=$GRAALVM_VERSION
+ARG GRAALVM_RELEASE
+ENV GRAALVM_RELEASE=$GRAALVM_RELEASE
 ARG DOWNLOAD_URL
 ENV PATH /usr/local/graalvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
@@ -12,11 +14,11 @@ RUN apt-get update &&                          \
 
 RUN curl -L "${DOWNLOAD_URL}" | \
       tar zx -C /usr/local/ &&  \
-      ln -s /usr/local/graalvm-ce-${GRAALVM_VERSION} /usr/local/graalvm
+      ln -s /usr/local/graalvm-${GRAALVM_RELEASE}-${GRAALVM_VERSION} /usr/local/graalvm
 
-RUN cp /usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts /usr/local/graalvm/jre/lib/security/cacerts
+RUN cp /usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts /usr/local/graalvm/lib/security/cacerts
 
-FROM ubuntu:19.04
+FROM ubuntu:20.04
 
 ARG VERSION
 LABEL maintainer='Rune Juhl Jacobsen <runejuhl@enableit.dk>'
