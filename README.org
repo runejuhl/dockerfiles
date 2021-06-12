@@ -1,15 +1,16 @@
-* Dockerfiles
+#+title: Dockerfiles
+#+author: Rune Juhl Jacobsen
 Various Dockerfiles.
 
-** Contents
+* Images
 
-*** docker-ilo-client
+** docker-ilo-client
 See [[./docker-ilo-client/README.org]]
 
-*** graalvm
+** graalvm
 Plain Ubuntu with [[https://github.com/oracle/graal][Oracle graalvm]] installed.
 
-*** lein-graal
+** lein-graal
 The above ~graalvm~ image with [[https://github.com/technomancy/leiningen][Leiningen]] and Make installed.
 
 Use like this:
@@ -24,13 +25,23 @@ Use like this:
          lein native-image
 #+END_SRC
 
-*** music-daemon
+** music-daemon
 See [[./music-daemon/README.org]].
 
-*** weechat-mosh
+** weechat-mosh
 See [[./weechat-mosh/README.org]].
 
-** Building
+* Building
 I've attempted to make a smart Makefile that can build images and fetch
 dependencies automatically. Make is awesome, but this use case presents a few
-problems, and it's not easy to grok how to get Make to do everything...
+problems, and it's not easy to grok how to get Make to do everything.
+
+To build an image:
+#+begin_src sh
+make graalvm/Dockerfile
+#+end_src
+
+Images are tagged with ~$USER~; use the ~DOCKER_USER~ variable to change it:
+#+begin_src sh
+make graalvm/Dockerfile DOCKER_USER=notme
+#+end_src
