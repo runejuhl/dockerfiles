@@ -13,7 +13,7 @@ RUN curl -fSsL -O "${LEIN_SOURCE}" && \
 RUN mkdir /usr/local/share/lein && \
   curl -L "${LEIN_STANDALONE}" > "/usr/local/share/lein/leiningen-${LEIN_VERSION}-standalone.jar"
 
-FROM runejuhl/graalvm:latest AS graal-base
+FROM runejuhl/graalvm:22.0.0.2 AS graal-base
 
 ARG LEIN_VERSION
 LABEL maintainer='Rune Juhl Jacobsen <runejuhl@enableit.dk>'
