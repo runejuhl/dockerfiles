@@ -32,10 +32,10 @@ ENV PATH /usr/local/graalvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bi
 
 RUN gu install native-image
 
-RUN apt-get update &&                                                   \
-  apt-get install --no-install-recommends -y gcc git make zlib1g-dev && \
-  apt-get autoclean &&                                                  \
-  apt-get autoremove &&                                                 \
+RUN apt-get update &&                                                                    \
+  apt-get install --no-install-recommends -y gcc git libstdc++-10-dev make zlib1g-dev && \
+  apt-get autoclean &&                                                                   \
+  apt-get autoremove &&                                                                  \
   rm -rf /var/cache/apt /var/lib/apt/lists
 
 ENV GRAALVM_HOME /usr/local/graalvm
